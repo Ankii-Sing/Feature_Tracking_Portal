@@ -24,6 +24,9 @@ public class Feature {
     @Column(name = "description", nullable = false, length = 512)
     private String description;
 
+    @Column(name = "due_date")
+    private LocalDate dueDate;
+
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "user_id")
     private User createdBy;
@@ -31,21 +34,6 @@ public class Feature {
     @ManyToOne
     @JoinColumn(name = "assigned_to", referencedColumnName = "user_id")
     private User assignedTo;
-
-    @Enumerated(EnumType.STRING)
-    private FeatureStatus status = FeatureStatus.PENDING;
-
-    @Enumerated(EnumType.STRING)
-    private FeatureStage stage;
-
-    @Column(name = "due_date")
-    private LocalDate dueDate;
-
-    @Column(name = "prod_go_ahead_status")
-    private Boolean prodGoAheadStatus = false;
-
-    @Column(name = "epic_owner_go_ahead_status")
-    private Boolean epicOwnerGoAheadStatus = false;
 
     @ManyToOne
     @JoinColumn(name = "prod_manager", referencedColumnName = "user_id")
@@ -58,5 +46,22 @@ public class Feature {
     @ManyToOne
     @JoinColumn(name = "epic_owner", referencedColumnName = "user_id")
     private User epicOwner;
+
+    @Enumerated(EnumType.STRING)
+    private FeatureStatus status = FeatureStatus.PENDING;
+
+    @Enumerated(EnumType.STRING)
+    private FeatureStage stage = FeatureStage.TECHNICAL_DESIGN;
+
+    @Column(name = "prod_go_ahead_status")
+    private Boolean prodGoAheadStatus = false;
+
+    @Column(name = "epic_owner_go_ahead_status")
+    private Boolean epicOwnerGoAheadStatus = false;
+
+    public Feature(Long featureId) {
+        this.featureId = featureId;
+    }
+
 
 }

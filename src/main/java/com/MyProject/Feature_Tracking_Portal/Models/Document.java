@@ -1,7 +1,9 @@
 package com.MyProject.Feature_Tracking_Portal.Models;
+import com.MyProject.Feature_Tracking_Portal.Enums.DocumentType;
 import jakarta.persistence.*;
+import lombok.Data;
 
-
+@Data
 @Entity
 @Table(name = "document")
 public class Document {
@@ -20,7 +22,7 @@ public class Document {
     private Feature featureId;
 
     @Enumerated(EnumType.STRING)
-    private EnumType documentType;
+    private DocumentType documentType;
 
     @Column(name = "document_link", nullable = false, length = 512)
     private String documentLink;

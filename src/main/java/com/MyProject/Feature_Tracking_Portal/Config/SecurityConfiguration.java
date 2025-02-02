@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/public/**").permitAll() // Public endpoints
                         .anyRequest().authenticated() // All other endpoints require authentication
                 )
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless session (JWT-based authentication)
                 )
