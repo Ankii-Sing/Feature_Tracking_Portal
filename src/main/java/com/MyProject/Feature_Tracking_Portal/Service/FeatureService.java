@@ -1,50 +1,68 @@
 package com.MyProject.Feature_Tracking_Portal.Service;
+import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
 import com.MyProject.Feature_Tracking_Portal.Models.Feature;
+import com.MyProject.Feature_Tracking_Portal.Models.User;
 import com.MyProject.Feature_Tracking_Portal.Repository.FeatureRepository;
 import com.MyProject.Feature_Tracking_Portal.dto.request.FeatureRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static com.MyProject.Feature_Tracking_Portal.Enums.UserRole.ADMIN;
+import static com.MyProject.Feature_Tracking_Portal.Enums.UserRole.EPIC_OWNER;
+import static com.MyProject.Feature_Tracking_Portal.Enums.UserRole.PRODUCT_MANAGER;
+
 @Service
 public class FeatureService {
 
     private final FeatureRepository featureRepository;
+    private final UserService userService;
 
-    public FeatureService(FeatureRepository featureRepository) {
+    @Autowired
+    public FeatureService(FeatureRepository featureRepository, UserService userService) {
         this.featureRepository = featureRepository;
+        this.userService = userService;
     }
 
-    // Allowed user IDs for restricted access
-private static final List<String> ALLOWED_USERS = Arrays.asList("ADMIN", "EPIC_OWNER", "PROD_MANAGER");
+    private static final List<UserRole> ALLOWED_USERS = Arrays.asList(ADMIN, EPIC_OWNER,PRODUCT_MANAGER);
 
-    public void addFeatureDetails(FeatureRequest request, String userId) {
-        // Authorization check
-        if (!ALLOWED_USERS.contains(userId)) {
+    public void addFeatureDetails(FeatureRequest request, UserRole userRole) {
+        if (!ALLOWED_USERS.contains(userRole)) {
             throw new RuntimeException("Access Denied: You don't have permission to add feature details.");
         }
 
-        // Convert request DTO to Entity
+        User assignedTo = userService.findById(request.getAssignedTo());
+        User prodManager = userService.findById(request.getProdManager());
+        User qaEngineer = userService.findById(request.getQaEngineer());
+        User epicOwner = userService.findById(request.getEpicOwner());
+        User created_by = userService.findById(request.getCreated_by());
+
+
         Feature feature = new Feature();
         feature.setTitle(request.getTitle());
         feature.setDescription(request.getDescription());
         feature.setDueDate(request.getDuedate());
-        feature.setAssignedTo(request.getAssignedTo());
-        feature.setProdManager(request.getProdManager());
-        feature.setQaEngineer(request.getQaEngineer());
+        feature.setAssignedTo(assignedTo);
+        feature.setProdManager(prodManager);
+        feature.setQaEngineer(qaEngineer);
+        feature.setEpicOwner(epicOwner);
+        feature.setCreatedBy(created_by);
 
-        // Save feature details
         featureRepository.save(feature);
     }
 
     public Feature getFeatureById(Long featureId) {
-        // Fetch the feature using the repository method
         return featureRepository.findByFeatureId(featureId)
                 .orElseThrow(() -> new RuntimeException("Feature not found with ID: " + featureId));
     }
 
     public List<Feature> getAllFeatures() {
-        return featureRepository.findAll();  // Fetch all features from the database
+        return featureRepository.findAll();
+    }
+
+    public void updateFeature(FeatureRequest request) {
+//        Long featureID = request.
     }
 }

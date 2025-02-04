@@ -1,8 +1,10 @@
 package com.MyProject.Feature_Tracking_Portal.controller;
 
 
+import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
 import com.MyProject.Feature_Tracking_Portal.Models.Feature;
 import com.MyProject.Feature_Tracking_Portal.Service.FeatureService;
+import com.MyProject.Feature_Tracking_Portal.Service.UserService;
 import com.MyProject.Feature_Tracking_Portal.dto.request.FeatureRequest;
 import com.MyProject.Feature_Tracking_Portal.utils.JwtService;
 import lombok.extern.java.Log;
@@ -15,27 +17,31 @@ import java.util.List;
 @Log
 public class FeatureController {
 
-    private final FeatureService featureService;
-    private final JwtService jwtUtil;
 
-    public FeatureController(FeatureService featureService, JwtService jwtUtil) {
+    private final FeatureService featureService;
+    private final UserService userService;
+
+    public FeatureController(FeatureService featureService, UserService userService) {
         this.featureService = featureService;
-        this.jwtUtil = jwtUtil;
+        this.userService = userService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addFeatureDetails(
-            @RequestBody FeatureRequest request,
-            @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> addFeatureDetails( @RequestBody FeatureRequest request) {
 
-        log.info(String.valueOf(token.length()));
-        // Extract user ID from JWT Token
-        String userId = String.valueOf(jwtUtil.extractUserId(token.substring(7).toString())); // Remove "Bearer "
+        Long userID = (request.getCreated_by());
+        UserRole userRole = userService.findRoleById((userID));
 
-        // Call service to add feature details
-        featureService.addFeatureDetails(request, userId);
+        featureService.addFeatureDetails(request, userRole);
 
         return ResponseEntity.ok("Feature details added successfully!");
+    }
+
+    @PostMapping("/update/{featureId}")
+    public ResponseEntity<String> updateFeature(@PathVariable Long featureId){
+//        request.get
+        featureService.updateFeature(request);
+        return ResponseEntity.ok("Feature updated successfully!");
     }
 
     @GetMapping("/{featureId}")
