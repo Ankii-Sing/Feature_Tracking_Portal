@@ -19,7 +19,6 @@
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(jwtInterceptor)
-//                .addPathPatterns("/user/**", "/meal/**")  // Protect user and meal-related endpoints
 //                .excludePathPatterns("/api/public/**");  // Exclude authentication endpoints
 //    }
 //}

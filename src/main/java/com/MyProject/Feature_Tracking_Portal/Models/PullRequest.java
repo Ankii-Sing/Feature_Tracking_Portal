@@ -21,4 +21,8 @@ public class PullRequest {
     @Column(name = "github_link", nullable = false, length = 512)
     private String Link;
 
+    public String Link() {
+        return Link;
+    }
+
 }

@@ -6,6 +6,7 @@ import com.MyProject.Feature_Tracking_Portal.Models.Feature;
 import com.MyProject.Feature_Tracking_Portal.Service.FeatureService;
 import com.MyProject.Feature_Tracking_Portal.Service.UserService;
 import com.MyProject.Feature_Tracking_Portal.dto.request.FeatureRequest;
+import com.MyProject.Feature_Tracking_Portal.dto.request.UpdateFeatureRequest;
 import com.MyProject.Feature_Tracking_Portal.utils.JwtService;
 import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,8 @@ public class FeatureController {
     }
 
     @PostMapping("/update/{featureId}")
-    public ResponseEntity<String> updateFeature(@PathVariable Long featureId){
-//        request.get
-        featureService.updateFeature(request);
+    public ResponseEntity<String> updateFeature(@RequestBody UpdateFeatureRequest request , @PathVariable Long featureId) {
+        featureService.updateFeature(featureId,request);
         return ResponseEntity.ok("Feature updated successfully!");
     }
 
