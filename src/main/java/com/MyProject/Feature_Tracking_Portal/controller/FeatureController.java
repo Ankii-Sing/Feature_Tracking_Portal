@@ -2,6 +2,7 @@ package com.MyProject.Feature_Tracking_Portal.controller;
 
 
 import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.Exception.FeatureNotFoundException;
 import com.MyProject.Feature_Tracking_Portal.Models.Feature;
 import com.MyProject.Feature_Tracking_Portal.Service.FeatureService;
 import com.MyProject.Feature_Tracking_Portal.Service.UserService;
@@ -9,6 +10,7 @@ import com.MyProject.Feature_Tracking_Portal.dto.request.FeatureRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.request.UpdateFeatureRequest;
 import com.MyProject.Feature_Tracking_Portal.utils.JwtService;
 import lombok.extern.java.Log;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -40,8 +42,14 @@ public class FeatureController {
 
     @PostMapping("/update/{featureId}")
     public ResponseEntity<String> updateFeature(@RequestBody UpdateFeatureRequest request , @PathVariable Long featureId) {
-        featureService.updateFeature(featureId,request);
-        return ResponseEntity.ok("Feature updated successfully!");
+        try {
+            Feature updatedFeature = featureService.updateFeature(featureId, request);
+            return ResponseEntity.ok("Feature updated successfully: " + updatedFeature.getFeatureId());
+        } catch (FeatureNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Feature not found: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update feature: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{featureId}")

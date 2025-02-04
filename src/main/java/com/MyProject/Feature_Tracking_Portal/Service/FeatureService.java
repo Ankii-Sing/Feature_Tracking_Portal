@@ -9,6 +9,7 @@ import com.MyProject.Feature_Tracking_Portal.dto.request.UpdateFeatureRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -66,59 +67,56 @@ public class FeatureService {
         return featureRepository.findAll();
     }
 
+    // Feature is updated Successfully , i just need to add some more chekcs to make sure everything is what updating is Legit.
+
     public Feature updateFeature(Long featureId, UpdateFeatureRequest request) {
         Optional<Feature> featureOptional = featureRepository.findById(featureId);
         if (featureOptional.isPresent()) {
             Feature feature = featureOptional.get();
 
+            System.out.println("Printing feature: " + feature);
 
-            User assignedTo = userService.findById(request.getAssignedTo());
-            User prodManager = userService.findById(request.getProdManager());
-            User qaEngineer = userService.findById(request.getQaEngineer());
-            User epicOwner = userService.findById(request.getEpicOwner());
+            // Fetching users for assigned roles if provided in the request
+            User assignedTo = (request.getAssignedTo() != null) ? userService.findById(request.getAssignedTo()) : feature.getAssignedTo();
+            User prodManager = (request.getProdManager() != null) ? userService.findById(request.getProdManager()) : feature.getProdManager();
+            User qaEngineer = (request.getQaEngineer() != null) ? userService.findById(request.getQaEngineer()) : feature.getQaEngineer();
+            User epicOwner = (request.getEpicOwner() != null) ? userService.findById(request.getEpicOwner()) : feature.getEpicOwner();
 
+            System.out.println("DEscription of new feature is :" + request.getDescription());
+            System.out.println("Titile of new feature is :" + request.getTitle());
+            System.out.println("DueDate of new feature is :" + request.getDueDate());
+            System.out.println("New feature is assignedTo :" + request.getAssignedTo());
 
-            // Update feature fields only if it is changed or not null.
+            System.out.println("Control reaches here: " + assignedTo + " " + prodManager + " " + qaEngineer + " " + epicOwner);
 
-            if(request.getDescription() != null && !request.getDescription().isEmpty() && request.getDescription().equals(getFeatureById(featureId).getDescription())) {
+            // ✅ Updating only when the new value is different
+            if (request.getDescription() != null && !request.getDescription().equals(feature.getDescription())) {
                 feature.setDescription(request.getDescription());
             }
-            if(request.getTitle() != null && !request.getTitle().isEmpty() && request.getTitle().equals(getFeatureById(featureId).getTitle())) {
+            if (request.getTitle() != null && !request.getTitle().equals(feature.getTitle())) {
                 feature.setTitle(request.getTitle());
             }
-
-            if(request.getDueDate() != null && request.getDueDate().equals(getFeatureById(featureId).getDueDate())) {
+            if (request.getDueDate() != null && !request.getDueDate().equals(feature.getDueDate())) {
                 feature.setDueDate(request.getDueDate());
             }
-
-            if(request.getStage() != null && request.getStage().equals(getFeatureById(featureId).getStage())) {
+            if (request.getStage() != null && !request.getStage().equals(feature.getStage())) {
                 feature.setStage(request.getStage());
             }
-
-            if(request.getStatus() != null && request.getStatus().equals(getFeatureById(featureId).getStatus())) {
+            if (request.getStatus() != null && !request.getStatus().equals(feature.getStatus())) {
                 feature.setStatus(request.getStatus());
             }
-
-            if(request.getAssignedTo() != null && request.getAssignedTo().equals(getFeatureById(featureId).getAssignedTo())) {
-                feature.setStatus(request.getStatus());
+            if (request.getAssignedTo() != null && !request.getAssignedTo().equals(feature.getAssignedTo())) {
+                feature.setAssignedTo(assignedTo);
             }
-
-            if(request.getAssignedTo() != null && request.getAssignedTo().equals(getFeatureById(featureId).getAssignedTo())) {
-                feature.setStatus(request.getStatus());
+            if (request.getProdManager() != null && !request.getProdManager().equals(feature.getProdManager())) {
+                feature.setProdManager(prodManager);
             }
-
-            if(request.getProdManager() != null && request.getProdManager().equals(getFeatureById(featureId).getProdManager())) {
-                feature.setStatus(request.getStatus());
+            if (request.getQaEngineer() != null && !request.getQaEngineer().equals(feature.getQaEngineer())) {
+                feature.setQaEngineer(qaEngineer);
             }
-
-            if(request.getQaEngineer() != null && request.getQaEngineer().equals(getFeatureById(featureId).getQaEngineer())) {
-                feature.setStatus(request.getStatus());
+            if (request.getEpicOwner() != null && !request.getEpicOwner().equals(feature.getEpicOwner())) {
+                feature.setEpicOwner(epicOwner);
             }
-
-            if(request.getEpicOwner() != null && request.getEpicOwner().equals(getFeatureById(featureId).getEpicOwner())) {
-                feature.setStatus(request.getStatus());
-            }
-
 
             return featureRepository.save(feature);
         } else {
