@@ -1,14 +1,13 @@
 package com.MyProject.Feature_Tracking_Portal.controller;
 
 
-import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
-import com.MyProject.Feature_Tracking_Portal.Exception.FeatureNotFoundException;
-import com.MyProject.Feature_Tracking_Portal.Models.Feature;
-import com.MyProject.Feature_Tracking_Portal.Service.FeatureService;
-import com.MyProject.Feature_Tracking_Portal.Service.UserService;
+import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.exception.FeatureNotFoundException;
+import com.MyProject.Feature_Tracking_Portal.models.Feature;
+import com.MyProject.Feature_Tracking_Portal.service.FeatureServiceImpl;
+import com.MyProject.Feature_Tracking_Portal.service.UserServiceImpl;
 import com.MyProject.Feature_Tracking_Portal.dto.request.FeatureRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.request.UpdateFeatureRequest;
-import com.MyProject.Feature_Tracking_Portal.utils.JwtService;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,34 +15,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public")
+@RequestMapping("/api/public/feature")
 @Log
 public class FeatureController {
 
 
-    private final FeatureService featureService;
-    private final UserService userService;
+    private final FeatureServiceImpl featureServiceImpl;
+    private final UserServiceImpl userServiceImpl;
 
-    public FeatureController(FeatureService featureService, UserService userService) {
-        this.featureService = featureService;
-        this.userService = userService;
+    public FeatureController(FeatureServiceImpl featureServiceImpl, UserServiceImpl userServiceImpl) {
+        this.featureServiceImpl = featureServiceImpl;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addFeatureDetails( @RequestBody FeatureRequest request) {
 
         Long userID = (request.getCreated_by());
-        UserRole userRole = userService.findRoleById((userID));
-
-        featureService.addFeatureDetails(request, userRole);
-
+        UserRole userRole = userServiceImpl.findRoleById((userID));
+        featureServiceImpl.addFeatureDetails(request, userRole);
         return ResponseEntity.ok("Feature details added successfully!");
     }
 
-    @PostMapping("/update/{featureId}")
-    public ResponseEntity<String> updateFeature(@RequestBody UpdateFeatureRequest request , @PathVariable Long featureId) {
+    @PostMapping("/update/{featureId}/{userId}")
+    public ResponseEntity<String> updateFeature(@PathVariable Long featureId,@PathVariable Long userId,@RequestBody UpdateFeatureRequest request) {
         try {
-            Feature updatedFeature = featureService.updateFeature(featureId, request);
+            Feature updatedFeature = featureServiceImpl.updateFeature(featureId,userId, request);
             return ResponseEntity.ok("Feature updated successfully: " + updatedFeature.getFeatureId());
         } catch (FeatureNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Feature not found: " + e.getMessage());
@@ -54,13 +51,13 @@ public class FeatureController {
 
     @GetMapping("/{featureId}")
     public ResponseEntity<Feature> getFeatureById(@PathVariable Long featureId) {
-        Feature feature = featureService.getFeatureById(featureId);
+        Feature feature = featureServiceImpl.getFeatureById(featureId);
         return ResponseEntity.ok(feature);  // Return the feature data with status 200
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Feature>> getAllFeatures() {
-        List<Feature> features = featureService.getAllFeatures();  // Call service method to get features
+        List<Feature> features = featureServiceImpl.getAllFeatures();  // Call service method to get features
         return ResponseEntity.ok(features);  // Return the list of features with a 200 OK response
     }
 }

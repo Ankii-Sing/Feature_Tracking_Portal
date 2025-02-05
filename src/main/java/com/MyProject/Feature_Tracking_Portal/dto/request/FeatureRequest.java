@@ -1,5 +1,4 @@
 package com.MyProject.Feature_Tracking_Portal.dto.request;
-import com.MyProject.Feature_Tracking_Portal.Models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

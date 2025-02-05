@@ -1,4 +1,4 @@
-package com.MyProject.Feature_Tracking_Portal.Config;
+package com.MyProject.Feature_Tracking_Portal.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

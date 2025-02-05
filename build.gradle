@@ -49,6 +49,7 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
 	implementation 'org.springframework.boot:spring-boot-starter-web'  // This should cover servlet dependency
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'  //
+	implementation 'org.apache.commons:commons-lang3:3.17.0'
 }
 
 tasks.named('test') {

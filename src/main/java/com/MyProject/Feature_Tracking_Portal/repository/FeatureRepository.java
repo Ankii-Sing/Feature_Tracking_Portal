@@ -1,6 +1,6 @@
-package com.MyProject.Feature_Tracking_Portal.Repository;
+package com.MyProject.Feature_Tracking_Portal.repository;
 
-import com.MyProject.Feature_Tracking_Portal.Models.Feature;
+import com.MyProject.Feature_Tracking_Portal.models.Feature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

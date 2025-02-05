@@ -1,4 +1,4 @@
-package com.MyProject.Feature_Tracking_Portal.Config;
+package com.MyProject.Feature_Tracking_Portal.config;
 import com.MyProject.Feature_Tracking_Portal.utils.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

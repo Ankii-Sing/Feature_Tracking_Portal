@@ -1,7 +1,7 @@
 package com.MyProject.Feature_Tracking_Portal.dto.request;
 
-import com.MyProject.Feature_Tracking_Portal.Enums.FeatureStage;
-import com.MyProject.Feature_Tracking_Portal.Enums.FeatureStatus;
+import com.MyProject.Feature_Tracking_Portal.enums.FeatureStage;
+import com.MyProject.Feature_Tracking_Portal.enums.FeatureStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

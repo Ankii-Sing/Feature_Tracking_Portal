@@ -1,5 +1,5 @@
-package com.MyProject.Feature_Tracking_Portal.Repository;
-import com.MyProject.Feature_Tracking_Portal.Models.Document;
+package com.MyProject.Feature_Tracking_Portal.repository;
+import com.MyProject.Feature_Tracking_Portal.models.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,13 +1,13 @@
-package com.MyProject.Feature_Tracking_Portal.Service;
+package com.MyProject.Feature_Tracking_Portal.service;
 
-import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
-import com.MyProject.Feature_Tracking_Portal.Models.User;
-import com.MyProject.Feature_Tracking_Portal.Repository.UserRepository;
+import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.models.User;
+import com.MyProject.Feature_Tracking_Portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;

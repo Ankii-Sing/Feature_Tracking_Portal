@@ -1,8 +1,7 @@
-package com.MyProject.Feature_Tracking_Portal.Service;
+package com.MyProject.Feature_Tracking_Portal.service;
 
-import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
-import com.MyProject.Feature_Tracking_Portal.Models.User;
-import com.MyProject.Feature_Tracking_Portal.Repository.UserRepository;
+import com.MyProject.Feature_Tracking_Portal.models.User;
+import com.MyProject.Feature_Tracking_Portal.repository.UserRepository;
 import com.MyProject.Feature_Tracking_Portal.dto.request.AuthenticationRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.request.RegisterRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.response.AuthenticationResponse;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

@@ -1,5 +1,5 @@
-package com.MyProject.Feature_Tracking_Portal.Models;
-import com.MyProject.Feature_Tracking_Portal.Enums.DocumentType;
+package com.MyProject.Feature_Tracking_Portal.models;
+import com.MyProject.Feature_Tracking_Portal.enums.DocumentType;
 import jakarta.persistence.*;
 import lombok.Data;
 

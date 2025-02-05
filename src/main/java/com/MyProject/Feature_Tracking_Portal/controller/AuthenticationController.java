@@ -1,5 +1,5 @@
 package com.MyProject.Feature_Tracking_Portal.controller;
-import com.MyProject.Feature_Tracking_Portal.Service.AuthenticationService;
+import com.MyProject.Feature_Tracking_Portal.service.AuthenticationServiceImpl;
 import com.MyProject.Feature_Tracking_Portal.dto.request.AuthenticationRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.request.RegisterRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.response.AuthenticationResponse;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final AuthenticationService service;
+    private final AuthenticationServiceImpl service;
 
     @ PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(

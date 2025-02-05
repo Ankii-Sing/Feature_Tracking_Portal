@@ -1,14 +1,13 @@
-package com.MyProject.Feature_Tracking_Portal.Models;
-
-import com.MyProject.Feature_Tracking_Portal.Enums.FeatureStage;
-import com.MyProject.Feature_Tracking_Portal.Enums.FeatureStatus;
+package com.MyProject.Feature_Tracking_Portal.models;
+import com.MyProject.Feature_Tracking_Portal.enums.FeatureStage;
+import com.MyProject.Feature_Tracking_Portal.enums.FeatureStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
-@Data  // Generates getters, setters, toString, equals, and hashCode
-@NoArgsConstructor  // Generates a no-args constructor
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "feature")
 public class Feature {

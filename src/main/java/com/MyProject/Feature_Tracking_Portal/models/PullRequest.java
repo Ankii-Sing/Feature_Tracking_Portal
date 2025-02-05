@@ -1,9 +1,9 @@
-package com.MyProject.Feature_Tracking_Portal.Models;
+package com.MyProject.Feature_Tracking_Portal.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data  // Generates getters, setters, toString, equals, and hashCode
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "pullrequest")

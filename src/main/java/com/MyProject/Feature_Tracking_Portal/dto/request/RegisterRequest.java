@@ -1,7 +1,6 @@
 package com.MyProject.Feature_Tracking_Portal.dto.request;
-import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
 import lombok.*;
-import org.hibernate.usertype.UserType;
 
 @Data
 @AllArgsConstructor

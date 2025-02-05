@@ -1,6 +1,6 @@
 package com.MyProject.Feature_Tracking_Portal.dto.request;
 
-import com.MyProject.Feature_Tracking_Portal.Enums.DocumentType;
+import com.MyProject.Feature_Tracking_Portal.enums.DocumentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

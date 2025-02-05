@@ -1,6 +1,6 @@
 package com.MyProject.Feature_Tracking_Portal.utils;
 
-import com.MyProject.Feature_Tracking_Portal.Models.User;
+import com.MyProject.Feature_Tracking_Portal.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

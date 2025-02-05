@@ -1,12 +1,10 @@
 package com.MyProject.Feature_Tracking_Portal.controller;
-import com.MyProject.Feature_Tracking_Portal.Models.PullRequest;
-import com.MyProject.Feature_Tracking_Portal.Service.PullRequestService;
+import com.MyProject.Feature_Tracking_Portal.models.PullRequest;
+import com.MyProject.Feature_Tracking_Portal.service.PullRequestServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
 
 @RestController
@@ -14,7 +12,7 @@ import java.util.List;
 public class PullRequestController {
 
     @Autowired
-    private PullRequestService pullRequestService;
+    private PullRequestServiceImpl pullRequestServiceImpl;
 
     @PostMapping("/add/{featureId}")
     public ResponseEntity<String> addPullRequest(@PathVariable Long featureId, @RequestBody PullRequest request) {
@@ -23,7 +21,7 @@ public class PullRequestController {
 //            String link = request here it is null nedd to check.
 
 
-            String response = pullRequestService.addPullRequest(featureId, request.getLink());
+            String response = pullRequestServiceImpl.addPullRequest(featureId, request.getLink());
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add PullRequest");
@@ -33,7 +31,7 @@ public class PullRequestController {
     // New GET endpoint to fetch pull requests by featureId
     @GetMapping("/{featureId}")
     public ResponseEntity<List<PullRequest>> getPullRequestsByFeature(@PathVariable Long featureId) {
-        List<PullRequest> pullRequests = pullRequestService.getPullRequestsByFeature(featureId);
+        List<PullRequest> pullRequests = pullRequestServiceImpl.getPullRequestsByFeature(featureId);
 
         if (pullRequests.isEmpty()) {
             return ResponseEntity.noContent().build();  // Returns 204 No Content if no pull requests are found

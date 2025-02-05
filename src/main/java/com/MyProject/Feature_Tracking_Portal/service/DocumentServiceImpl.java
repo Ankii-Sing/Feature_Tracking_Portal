@@ -1,21 +1,19 @@
-package com.MyProject.Feature_Tracking_Portal.Service;
+package com.MyProject.Feature_Tracking_Portal.service;
 
-import com.MyProject.Feature_Tracking_Portal.Enums.DocumentType;
-import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
-import com.MyProject.Feature_Tracking_Portal.Models.Document;
-import com.MyProject.Feature_Tracking_Portal.Models.Feature;
-import com.MyProject.Feature_Tracking_Portal.Models.User;
-import com.MyProject.Feature_Tracking_Portal.Repository.DocumentRepository;
-import com.MyProject.Feature_Tracking_Portal.Repository.FeatureRepository;
-import com.MyProject.Feature_Tracking_Portal.Repository.UserRepository;
+import com.MyProject.Feature_Tracking_Portal.enums.DocumentType;
+import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.models.Document;
+import com.MyProject.Feature_Tracking_Portal.models.Feature;
+import com.MyProject.Feature_Tracking_Portal.models.User;
+import com.MyProject.Feature_Tracking_Portal.repository.DocumentRepository;
+import com.MyProject.Feature_Tracking_Portal.repository.FeatureRepository;
+import com.MyProject.Feature_Tracking_Portal.repository.UserRepository;
 import com.MyProject.Feature_Tracking_Portal.dto.request.DocumentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class DocumentService {
+public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
     private DocumentRepository documentRepository;

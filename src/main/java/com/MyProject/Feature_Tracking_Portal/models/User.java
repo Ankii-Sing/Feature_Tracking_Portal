@@ -1,5 +1,5 @@
-package com.MyProject.Feature_Tracking_Portal.Models;
-import com.MyProject.Feature_Tracking_Portal.Enums.UserRole;
+package com.MyProject.Feature_Tracking_Portal.models;
+import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
