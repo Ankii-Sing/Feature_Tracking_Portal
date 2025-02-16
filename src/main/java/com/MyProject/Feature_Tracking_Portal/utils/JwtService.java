@@ -61,9 +61,15 @@ public class JwtService {
                 .setSubject(user.getEmail()) // ✅ Email is stored in Subject
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours
-                .signWith(getSignInKey(), SignatureAlgorithm.HS512)
+                .signWith(getSignInKey(),SignatureAlgorithm.HS512)
                 .compact();
     }
+
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
 
     // ✅ Validate token (email-based authentication)
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -88,8 +94,5 @@ public class JwtService {
                 .getBody();
     }
 
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
+
 }

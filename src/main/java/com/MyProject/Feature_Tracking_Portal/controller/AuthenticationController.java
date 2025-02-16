@@ -1,28 +1,36 @@
 package com.MyProject.Feature_Tracking_Portal.controller;
+import com.MyProject.Feature_Tracking_Portal.dto.response.UserResponse;
+import com.MyProject.Feature_Tracking_Portal.models.User;
 import com.MyProject.Feature_Tracking_Portal.service.AuthenticationServiceImpl;
 import com.MyProject.Feature_Tracking_Portal.dto.request.AuthenticationRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.request.RegisterRequest;
 import com.MyProject.Feature_Tracking_Portal.dto.response.AuthenticationResponse;
+import com.MyProject.Feature_Tracking_Portal.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/public")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationController {
 
     private final AuthenticationServiceImpl service;
+    private final UserServiceImpl userServiceImpl;
 
-    @ PostMapping("/register")
+
+    @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(service.register(request));
     }
+
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
@@ -30,6 +38,20 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
+//    @GetMapping("/{email}")
+//    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) {
+//        UserResponse user = userServiceImpl.getUserByEmail(email);
+//        return ResponseEntity.ok(user);
+//    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers(@RequestHeader("Authorization") String authorization) {
+        authorization = authorization.substring(7);
+        log.info("Received Token in get all users : " + authorization);
+        return ResponseEntity.ok(userServiceImpl.getAllUsers());
+    }
 
 
-}
+
+
+    }

@@ -53,10 +53,10 @@ public class Feature {
     private FeatureStage stage = FeatureStage.TECHNICAL_DESIGN;
 
     @Column(name = "prod_go_ahead_status")
-    private Boolean prodGoAheadStatus = false;
+    private Boolean prodGoAheadStatus = null;
 
     @Column(name = "epic_owner_go_ahead_status")
-    private Boolean epicOwnerGoAheadStatus = false;
+    private Boolean epicOwnerGoAheadStatus = null;
 
     public Feature(Long featureId) {
         this.featureId = featureId;

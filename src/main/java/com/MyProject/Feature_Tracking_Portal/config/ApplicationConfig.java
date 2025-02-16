@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 @Log
 public class ApplicationConfig {
+
     private final UserRepository userRepository;
     private final JwtService jwtService;
 

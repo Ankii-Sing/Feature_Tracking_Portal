@@ -6,4 +6,5 @@ import java.util.List;
 public interface PullRequestService {
     String addPullRequest(Long featureId, String githubLink);
     List<PullRequest> getPullRequestsByFeature(Long featureId);
+    String updatePrStatus(Long pullRequestId, Boolean prStatus);
 }

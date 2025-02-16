@@ -9,4 +9,5 @@ import lombok.*;
 @Getter
 public class PullRequest {
     private String Link;
+    private Boolean prStatus = null;
 }

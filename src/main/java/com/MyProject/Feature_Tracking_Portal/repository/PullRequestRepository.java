@@ -9,4 +9,5 @@ import java.util.List;
 public interface PullRequestRepository extends JpaRepository<PullRequest, Long> {
 
     List<PullRequest> findByFeature_FeatureId(Long featureId);
+
 }

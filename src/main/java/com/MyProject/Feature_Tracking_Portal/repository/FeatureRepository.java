@@ -18,5 +18,9 @@ public interface FeatureRepository extends JpaRepository<Feature, Long> {
     Optional<Feature> findByFeatureId(Long featureId);
     List<Feature> findAll();
 
+//
+//    @Query("SELECT f FROM Feature f WHERE f.assignedTo = :userId")
+//    List<Feature> findByAssignedUserId(@Param("userId") Long userId);
+
 
 }

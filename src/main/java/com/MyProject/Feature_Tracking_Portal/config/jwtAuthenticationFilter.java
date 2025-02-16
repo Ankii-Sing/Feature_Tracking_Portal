@@ -34,11 +34,15 @@ public class jwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("my jwt auth header is : in authfilter layer " + authHeader);
 //     Now lets extract the jwt token from this header
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);  // to extract the useremail from JWT TOken.
+//        jwt = authHeader;
+        userEmail = jwtService.extractEmail(jwt);  // to extract the useremail from JWT TOken.
+        System.out.println("user email is : " + userEmail);
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailService.loadUserByUsername(userEmail);
+
             if(jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails
@@ -52,8 +56,6 @@ public class jwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-
-
 
     }
 }

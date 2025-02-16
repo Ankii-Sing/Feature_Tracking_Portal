@@ -22,6 +22,8 @@ public class FeatureResponse {
     private FeatureStatus status;
     private Long createdBy;
     private Long assignedTo;
+    private boolean epicOwnerGoAheadStatus;
+    private boolean prodGoAheadStatus;
 
 
 

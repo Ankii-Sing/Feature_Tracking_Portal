@@ -1,5 +1,4 @@
 package com.MyProject.Feature_Tracking_Portal.service;
-
 import com.MyProject.Feature_Tracking_Portal.enums.DocumentType;
 import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
 import com.MyProject.Feature_Tracking_Portal.models.Document;
@@ -11,25 +10,28 @@ import com.MyProject.Feature_Tracking_Portal.repository.UserRepository;
 import com.MyProject.Feature_Tracking_Portal.dto.request.DocumentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
 
-    @Autowired
-    private DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
+    private final FeatureRepository featureRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private FeatureRepository featureRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public DocumentServiceImpl(DocumentRepository documentRepository, FeatureRepository featureRepository, UserRepository userRepository) {
+        this.documentRepository = documentRepository;
+        this.featureRepository = featureRepository;
+        this.userRepository = userRepository;
+    }
 
     public String addDocument(DocumentRequest request, Long userId) {
 
-        boolean isAssigned = featureRepository.isUserAssignedToFeature(request.getFeatureId(), userId);
-        if (!isAssigned) {
-            throw new RuntimeException("User is not assigned to this feature.");
-        }
+//        boolean isAssigned = featureRepository.isUserAssignedToFeature(request.getFeatureId(), userId);
+//        if (!isAssigned) {
+//            throw new RuntimeException("User is not assigned to this feature.");
+//        }
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -51,7 +53,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         // 4. Save document
         Document document = new Document();
-        document.setFeatureId(feature);  // Assuming Feature has constructor with ID
+        document.setFeatureId(feature);
         document.setUserId(user);
         document.setDocumentType(request.getDocumentType());
         document.setDocumentLink(request.getDocumentLink());
@@ -75,5 +77,12 @@ public class DocumentServiceImpl implements DocumentService {
 
             default -> false;
         };
+    }
+
+    public List<Document> getDocumentsByFeatureId(Long featureId) {
+        Feature feature = featureRepository.findById(featureId)
+                .orElseThrow(() -> new IllegalArgumentException("Feature not found with ID: " + featureId));
+
+        return documentRepository.findByFeatureId(feature);
     }
 }
