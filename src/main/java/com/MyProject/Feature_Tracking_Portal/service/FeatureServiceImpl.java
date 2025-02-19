@@ -32,8 +32,6 @@ public class FeatureServiceImpl implements FeatureService {
         this.corsConfigurationSource = corsConfigurationSource;
     }
 
-//    private static final List<UserRole> ALLOWED_USERS = Arrays.asList(ADMIN, EPIC_OWNER,PRODUCT_MANAGER);
-
     @Transactional
     public void addFeatureDetails(FeatureRequest request, UserRole userRole) {
 
@@ -95,12 +93,10 @@ public class FeatureServiceImpl implements FeatureService {
 
 
     public List<Feature> getAllFeatures() {
-//        System.out.println("Printing all features");
         return featureRepository.findAll();
     }
 
     // Feature is updated Successfully , i just need to add some more chekcs to make sure everything is what updating is Legit.
-    // testing this api is left.
     @Transactional
     public Feature updateFeature(Long featureId, Long userId, UpdateFeatureRequest request) {
         Optional<Feature> featureOptional = featureRepository.findById(featureId);
@@ -180,22 +176,16 @@ public class FeatureServiceImpl implements FeatureService {
     @Transactional
     public boolean updateFeatureApproval(Long FeatureId , Boolean status, FeatureStage stage) {
         Optional<Feature> featureOpt = featureRepository.findById(FeatureId);
-//        System.out.println("Printing feature: " + featureOpt);
-
         if (featureOpt.isPresent()) {
             Feature feature = featureOpt.get();
 
-//            FeatureStage stage = feature.getStage();
-
-//            System.out.println("Printing stage: " + stage);
-//            System.out.println("Feature status: " + status);
-
             if (stage.equals(FeatureStage.PRODUCT_GO_AHEAD)) {
                 feature.setProdGoAheadStatus(status);
-            } else if (stage.equals(FeatureStage.EPIC_OWNER_GO_AHEAD)) {
+                // check also if prodGoAhedStaus is ture then only we updat the epicownergoAhed.
+            } else if ( stage.equals(FeatureStage.EPIC_OWNER_GO_AHEAD)) {
                 feature.setEpicOwnerGoAheadStatus(status);
             } else {
-                return false; // Invalid stage
+                return false;
             }
 
             featureRepository.save(feature);
@@ -203,12 +193,4 @@ public class FeatureServiceImpl implements FeatureService {
         }
         return false;
     }
-
-//    @Override
-//    public List<Feature> getFeaturesByUserId(Long userId) {
-//
-//        System.out.println("user id of the user: " + userId);
-//        return featureRepository.findByAssignedUserId(userId);
-////                .orElseThrow(() -> new RuntimeException("Feature not found with ID: " + userI));
-//    }
 }

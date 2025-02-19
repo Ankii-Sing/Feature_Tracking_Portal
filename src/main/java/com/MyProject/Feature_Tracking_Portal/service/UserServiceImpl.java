@@ -30,24 +30,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
     }
 
-    @Override
-    public Long findUserIdByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("user email not found")).getUserId();
-//                orElseThrow(()-> new RuntimeException("user email not found"));
-    }
-
-    public UserResponse getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
-
-        return new UserResponse(
-                user.getUserId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getRole().name()
-        );
-    }
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

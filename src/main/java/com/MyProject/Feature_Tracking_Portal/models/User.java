@@ -26,12 +26,16 @@ public class User implements UserDetails {
     @Column(name = "name", nullable = false, length = 100)
     private String username;
 
+    @Getter
+    @Setter
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(name = "password", nullable = false, length = 512)
     private String password;
 
+    @Setter
+    @Getter
     @Enumerated(EnumType.STRING)
     private UserRole role ;
 
@@ -60,19 +64,4 @@ public class User implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
 }

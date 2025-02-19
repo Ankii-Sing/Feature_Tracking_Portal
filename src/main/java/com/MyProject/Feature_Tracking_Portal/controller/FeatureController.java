@@ -39,16 +39,7 @@ public class FeatureController {
     public ResponseEntity<String> addFeatureDetails( @RequestBody FeatureRequest request
             ,@RequestHeader("Authorization") String token) {
 
-//        log.info("I'M HERE IN THE ADD CONTROLLER");
-//        System.out.println("Received Token in add features deatis: " + token);
-
-//        extract the userid form the token and then process.
-//        first extract mail and then userid form that.
-//        System.out.println("request: " + request);
         token = token.substring(7);
-//        String email = jwtService.extractEmail(token);
-//        Long userID = userService.findUserIdByEmail(email);
-
         Long userID = (request.getCreated_by());
         UserRole userRole = userServiceImpl.findRoleById((userID));
         featureServiceImpl.addFeatureDetails(request, userRole);
@@ -79,37 +70,24 @@ public class FeatureController {
     @GetMapping("/{featureId}")
     public ResponseEntity<Feature> getFeatureByFeatureId(@PathVariable Long featureId
             ,@RequestHeader("Authorization") String token) {
-
-//        log.info("I'M HERE IN GET FEATURE BY FEATURE ID");
-//        System.out.println("Received Token : " + token);
         Feature feature = featureServiceImpl.getFeatureById(featureId);
-        return ResponseEntity.ok(feature);  // Return the feature data with status 200
+        return ResponseEntity.ok(feature);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Feature>> getAllFeatures( ){
-//        System.out.println("I'M HERE IN THE GET ALL Feature CONTROLLER");
-        List<Feature> features = featureServiceImpl.getAllFeatures();  // Call service method to get features
-        return ResponseEntity.ok(features);  // Return the list of features with a 200 OK response
+        List<Feature> features = featureServiceImpl.getAllFeatures();
+        return ResponseEntity.ok(features);
     }
 
 // endpoint for adding approval requst.
     @PostMapping("/approval")
     public ResponseEntity<String> updateFeatureApproval(@RequestBody FeatureApprovalRequest request ,@RequestHeader("Authorization") String token) {
 
-//        System.out.println("Feature approval request: " + request);
-//        System.out.println("Feature approval Token before parsing: " + token);
-        token = token.substring(7);
-
         UserRole userRole = userServiceImpl.findRoleById(request.getUserId());
-
-        // Check if feature exists
         Long FeatureID = request.getFeatureId();
-        Feature featureOpt = featureServiceImpl.getFeatureById(FeatureID);
 
         FeatureStage stage = request.getStage();
-
-        // Role-based validation
         if (stage.equals(FeatureStage.PRODUCT_GO_AHEAD) &&
                 !(userRole.equals(UserRole.ADMIN) || userRole.equals(UserRole.PRODUCT_MANAGER))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to approve Product Go-Ahead.");
@@ -120,7 +98,6 @@ public class FeatureController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to approve Epic Owner Go-Ahead.");
         }
 
-        // Update feature approval status
         boolean isUpdated = featureServiceImpl.updateFeatureApproval(FeatureID, request.getStatus(), stage);
 
         if (isUpdated) {
@@ -129,12 +106,6 @@ public class FeatureController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating approval status.");
         }
     }
-
-//    @GetMapping("user/{userId}")
-//    public ResponseEntity<List<Feature>> getFeaturesByUserId(@PathVariable Long userId) {
-//        List<Feature> features = featureServiceImpl.getFeaturesByUserId(userId);
-//        return ResponseEntity.ok(features);
-//    }
 }
 
 

@@ -17,15 +17,9 @@ public class PullRequestController {
     private PullRequestServiceImpl pullRequestServiceImpl;
 
     @PostMapping("/add/{featureId}")
-    public ResponseEntity<String> addPullRequest(@PathVariable Long featureId, @RequestBody PullRequest request
-            ,@RequestHeader("Authorization") String token) {
-
-        System.out.println("token in add Pull Request: " + token );
-        System.out.println("request body  " + request );
+    public ResponseEntity<String> addPullRequest(@PathVariable Long featureId, @RequestBody PullRequest request,@RequestHeader("Authorization") String token) {
 
         try {
-            System.out.println("the link we get is: " + request.getLink());
-//            String link = request here it is null nedd to check.
             if(request.getLink().equals("")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The link we get is: " + request.getLink());
             }
@@ -36,26 +30,19 @@ public class PullRequestController {
         }
     }
 
-    // New GET endpoint to fetch pull requests by featureId
+    // fetch pull requests by featureId
     @GetMapping("/{featureId}")
-    public ResponseEntity<List<PullRequest>> getPullRequestsByFeature(@PathVariable Long featureId
-            ,@RequestHeader("Authorization") String token) {
-
-        System.out.println("token in GET Pull Request: " + token );
+    public ResponseEntity<List<PullRequest>> getPullRequestsByFeature(@PathVariable Long featureId,@RequestHeader("Authorization") String token) {
         List<PullRequest> pullRequests = pullRequestServiceImpl.getPullRequestsByFeature(featureId);
 
         if (pullRequests.isEmpty()) {
-            return ResponseEntity.noContent().build();  // Returns 204 No Content if no pull requests are found
+            return ResponseEntity.noContent().build();
         }
-
-        return ResponseEntity.ok(pullRequests);  // Returns 200 OK with the list of pull requests
+        return ResponseEntity.ok(pullRequests);
     }
 
     @PostMapping("/update-status")
-    public ResponseEntity<String> updatePrStatus(@RequestBody PRUpdateStatusRequest request
-            ,@RequestHeader("Authorization") String token) {
-
-        System.out.println("token in add PRStatusRequest : " + token );
+    public ResponseEntity<String> updatePrStatus(@RequestBody PRUpdateStatusRequest request,@RequestHeader("Authorization") String token) {
         try {
             String responseMessage = pullRequestServiceImpl.updatePrStatus(request.getPullRequestId(), request.getPrStatus());
             return ResponseEntity.ok(responseMessage);

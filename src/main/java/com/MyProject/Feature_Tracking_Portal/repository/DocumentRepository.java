@@ -7,8 +7,5 @@ import java.util.List;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long> {
-
-// i need the document by (featureid) all the documents , and show them on the page.[ i think single single query will be there]
     List<Document> findByFeatureId(Feature feature);
-
 }

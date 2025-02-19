@@ -11,16 +11,7 @@ import java.util.List;
 
 @Repository
 public interface FeatureRepository extends JpaRepository<Feature, Long> {
-
-    @Query("SELECT COUNT(f) > 0 FROM Feature f WHERE f.featureId = :featureId AND f.assignedTo.userId = :userId")
-    boolean isUserAssignedToFeature(@Param("featureId") Long featureId, @Param("userId") Long userId);
-
     Optional<Feature> findByFeatureId(Long featureId);
     List<Feature> findAll();
-
-//
-//    @Query("SELECT f FROM Feature f WHERE f.assignedTo = :userId")
-//    List<Feature> findByAssignedUserId(@Param("userId") Long userId);
-
 
 }

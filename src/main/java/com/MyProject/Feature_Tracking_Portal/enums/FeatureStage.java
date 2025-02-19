@@ -1,12 +1,12 @@
 package com.MyProject.Feature_Tracking_Portal.enums;
 
 public enum FeatureStage {
-    TECHNICAL_DESIGN,      // Initial design and planning
-    DEV_TESTING,           // Developer testing phase
-    PRS_REVIEWED,                   // Code review process
-    QA_TESTING,            // Quality assurance testing
-    PRE_POST_DEPLOYMENT,  // Pre/Post deployment documentation
-    SANITY_TESTING_STAGING, // Staging and sanity testing
-    PRODUCT_GO_AHEAD,               // Product manager approval
-    EPIC_OWNER_GO_AHEAD             // Final approval from the epic owner
+    TECHNICAL_DESIGN,
+    DEV_TESTING,
+    PRS_REVIEWED,
+    QA_TESTING,
+    PRE_POST_DEPLOYMENT,
+    SANITY_TESTING_STAGING,
+    PRODUCT_GO_AHEAD,
+    EPIC_OWNER_GO_AHEAD
 }

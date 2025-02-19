@@ -6,5 +6,5 @@ public enum UserRole {
     PRODUCT_MANAGER,
     QA_ENGINEER,
     EPIC_OWNER,
-    REGULAR_USER; // Default role for normal users
+    REGULAR_USER;
 }

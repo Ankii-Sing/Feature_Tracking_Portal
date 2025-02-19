@@ -9,6 +9,6 @@ import lombok.Setter;
 public class FeatureApprovalRequest {
     private Long featureId;
     private FeatureStage stage;
-    private Boolean status; // true for Approved, false for Declined
-    private Long userId;  // Added userId to track who is approving
+    private Boolean status;
+    private Long userId;
 }

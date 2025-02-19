@@ -58,9 +58,5 @@ public class Feature {
     @Column(name = "epic_owner_go_ahead_status")
     private Boolean epicOwnerGoAheadStatus = null;
 
-    public Feature(Long featureId) {
-        this.featureId = featureId;
-    }
-
 
 }

@@ -19,8 +19,6 @@ public class UpdateFeatureRequest {
     private LocalDate dueDate;
     private FeatureStage stage;
     private FeatureStatus status;
-
-// DEVELOPER RELATED UPDATES
     private Long assignedTo;
     private Long prodManager;
     private Long qaEngineer;

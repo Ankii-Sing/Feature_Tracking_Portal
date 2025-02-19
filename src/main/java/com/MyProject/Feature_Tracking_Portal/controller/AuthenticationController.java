@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/public")
 @RequiredArgsConstructor
@@ -38,12 +37,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-//    @GetMapping("/{email}")
-//    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) {
-//        UserResponse user = userServiceImpl.getUserByEmail(email);
-//        return ResponseEntity.ok(user);
-//    }
-
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(@RequestHeader("Authorization") String authorization) {
         authorization = authorization.substring(7);
@@ -51,7 +44,4 @@ public class AuthenticationController {
         return ResponseEntity.ok(userServiceImpl.getAllUsers());
     }
 
-
-
-
-    }
+}

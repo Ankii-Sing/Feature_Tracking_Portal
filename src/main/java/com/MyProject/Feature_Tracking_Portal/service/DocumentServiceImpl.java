@@ -1,5 +1,4 @@
 package com.MyProject.Feature_Tracking_Portal.service;
-
 import com.MyProject.Feature_Tracking_Portal.dto.request.DocumentRequest;
 import com.MyProject.Feature_Tracking_Portal.enums.DocumentType;
 import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
@@ -33,21 +32,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     public String addDocument(DocumentRequest request, Long userId) {
 
-//        boolean isAssigned = featureRepository.isUserAssignedToFeature(request.getFeatureId(), userId);
-//        if (!isAssigned) {
-//            throw new RuntimeException("User is not assigned to this feature.");
-//        }
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
-
-//        System.out.println("Document Type is:" + request.getDocumentType());
-//        System.out.println("user Type is:" + user.getRole());
-
-        // Validate document type based on user role
-//        System.out.println( "The function returns "+canUploadDocument(user.getRole(), request.getDocumentType()));
-//        System.out.println("output of statement :" +( DocumentType.TECHNICAL_DOC == request.getDocumentType()));
-
 
         if (!canUploadDocument(user.getRole(), request.getDocumentType())) {
             throw new UnauthorizedDocumentUploadException("User is not allowed to upload this document type.");
@@ -56,7 +42,6 @@ public class DocumentServiceImpl implements DocumentService {
         Feature feature = featureRepository.findByFeatureId(request.getFeatureId())
                 .orElseThrow(() -> new FeatureNotFoundException("Feature not found with ID: " + request.getFeatureId()));
 
-        // 4. Save document
         Document document = new Document();
         document.setFeatureId(feature);
         document.setUserId(user);

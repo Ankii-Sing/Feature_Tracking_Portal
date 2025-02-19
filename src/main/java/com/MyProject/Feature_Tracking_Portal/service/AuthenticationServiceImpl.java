@@ -32,20 +32,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
-
-    // create user , authenticate and save it to the database and return generated token out of it.
     public AuthenticationResponse register(RegisterRequest request) {
-//        log.info("Registering user");
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getUserRole())
                 .build();
-//        log.info("Printing user :" + user);
         userRepository.save(user);
         var jwtToken = "Bearer " + jwtService.generateToken(user);
-//        var jwtToken = jwtService.generateToken(user);
+
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .build();
@@ -58,7 +54,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 )
         );
         User user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//        var jwtToken = jwtService.generateToken(user);
         var jwtToken = "Bearer " + jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)

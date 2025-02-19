@@ -27,19 +27,15 @@ public class jwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain)
             throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization"); // we extract the Autorization header
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-//        System.out.println("my jwt auth header is : in authfilter layer " + authHeader);
-//     Now lets extract the jwt token from this header
         jwt = authHeader.substring(7);
-//        jwt = authHeader;
-        userEmail = jwtService.extractEmail(jwt);  // to extract the useremail from JWT TOken.
-        System.out.println("user email is : " + userEmail);
+        userEmail = jwtService.extractEmail(jwt);
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailService.loadUserByUsername(userEmail);
 

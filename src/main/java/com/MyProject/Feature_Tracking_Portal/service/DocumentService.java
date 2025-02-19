@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface DocumentService {
     String addDocument(DocumentRequest request, Long userId);
-//    List<Document> getDocumentsByFeatureId(Long featureId);
-public List<Document> getDocumentsByFeatureId(Long featureId);
+    List<Document> getDocumentsByFeatureId(Long featureId);
 }

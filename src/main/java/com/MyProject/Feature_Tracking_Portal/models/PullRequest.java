@@ -24,8 +24,4 @@ public class PullRequest {
     @Column(name = "pr_status")
     private Boolean prStatus; // Nullable Boolean: null -> Pending, true -> Approved, false -> Rejected
 
-    public String Link() {
-        return Link;
-    }
-
 }

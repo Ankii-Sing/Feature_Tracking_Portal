@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 public class PRUpdateStatusRequest {
     private Long pullRequestId;
-    private Boolean prStatus; // true = Approved, false = Rejected
+    private Boolean prStatus;
 }

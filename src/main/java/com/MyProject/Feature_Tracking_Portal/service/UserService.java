@@ -7,6 +7,5 @@ import java.util.List;
 public interface UserService {
     public User findById(Long userId);
     public UserRole findRoleById(Long userId);
-    public Long findUserIdByEmail(String email);
     public List<User> getAllUsers() ;
 }

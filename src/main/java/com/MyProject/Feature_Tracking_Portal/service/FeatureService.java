@@ -14,8 +14,5 @@ public interface FeatureService {
     Feature getFeatureById(Long featureId);
     List<Feature> getAllFeatures();
     Feature updateFeature(Long featureId, Long userId, UpdateFeatureRequest request);
-    public boolean updateFeatureApproval(Long FeatureId , Boolean status,FeatureStage stage) ;
-//    List<Feature> getFeaturesByUserId(Long userId) ;
-//        return featureRepository.findByAssignedUserId(userId);
-//    }
+    boolean updateFeatureApproval(Long FeatureId , Boolean status,FeatureStage stage) ;
 }
