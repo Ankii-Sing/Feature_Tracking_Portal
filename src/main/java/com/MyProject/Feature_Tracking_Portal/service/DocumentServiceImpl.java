@@ -73,12 +73,16 @@ public class DocumentServiceImpl implements DocumentService {
 
             case DEVELOPER ->
                     (documentType == DocumentType.TECHNICAL_DOC ||
-                            documentType == DocumentType.DEV_TESTING_DOC);
+                            documentType == DocumentType.DEV_TESTING_DOC ||
+                            documentType == DocumentType.PRE_POST_DOC);
 
             case QA_ENGINEER ->
                     (documentType == DocumentType.QA_DOC ||
                             documentType == DocumentType.PRE_POST_DOC ||
                             documentType == DocumentType.STAGING_DOC);
+
+            case PRODUCT_MANAGER ->
+                    (documentType == DocumentType.STAGING_DOC);
 
             default -> false;
         };
