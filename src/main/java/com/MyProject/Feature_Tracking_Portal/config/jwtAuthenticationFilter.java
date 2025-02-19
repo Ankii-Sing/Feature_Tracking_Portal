@@ -34,7 +34,7 @@ public class jwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("my jwt auth header is : in authfilter layer " + authHeader);
+//        System.out.println("my jwt auth header is : in authfilter layer " + authHeader);
 //     Now lets extract the jwt token from this header
         jwt = authHeader.substring(7);
 //        jwt = authHeader;

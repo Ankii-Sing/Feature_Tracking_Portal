@@ -39,12 +39,12 @@ public class FeatureController {
     public ResponseEntity<String> addFeatureDetails( @RequestBody FeatureRequest request
             ,@RequestHeader("Authorization") String token) {
 
-        log.info("I'M HERE IN THE ADD CONTROLLER");
-        System.out.println("Received Token in add features deatis: " + token);
+//        log.info("I'M HERE IN THE ADD CONTROLLER");
+//        System.out.println("Received Token in add features deatis: " + token);
 
 //        extract the userid form the token and then process.
 //        first extract mail and then userid form that.
-        System.out.println("request: " + request);
+//        System.out.println("request: " + request);
         token = token.substring(7);
 //        String email = jwtService.extractEmail(token);
 //        Long userID = userService.findUserIdByEmail(email);
@@ -80,15 +80,15 @@ public class FeatureController {
     public ResponseEntity<Feature> getFeatureByFeatureId(@PathVariable Long featureId
             ,@RequestHeader("Authorization") String token) {
 
-        log.info("I'M HERE IN GET FEATURE BY FEATURE ID");
-        System.out.println("Received Token : " + token);
+//        log.info("I'M HERE IN GET FEATURE BY FEATURE ID");
+//        System.out.println("Received Token : " + token);
         Feature feature = featureServiceImpl.getFeatureById(featureId);
         return ResponseEntity.ok(feature);  // Return the feature data with status 200
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Feature>> getAllFeatures( ){
-        System.out.println("I'M HERE IN THE GET ALL Feature CONTROLLER");
+//        System.out.println("I'M HERE IN THE GET ALL Feature CONTROLLER");
         List<Feature> features = featureServiceImpl.getAllFeatures();  // Call service method to get features
         return ResponseEntity.ok(features);  // Return the list of features with a 200 OK response
     }
@@ -97,8 +97,8 @@ public class FeatureController {
     @PostMapping("/approval")
     public ResponseEntity<String> updateFeatureApproval(@RequestBody FeatureApprovalRequest request ,@RequestHeader("Authorization") String token) {
 
-        System.out.println("Feature approval request: " + request);
-        System.out.println("Feature approval Token before parsing: " + token);
+//        System.out.println("Feature approval request: " + request);
+//        System.out.println("Feature approval Token before parsing: " + token);
         token = token.substring(7);
 
         UserRole userRole = userServiceImpl.findRoleById(request.getUserId());
@@ -139,4 +139,3 @@ public class FeatureController {
 
 
 
-// yha pe jWtService layer ki dikkat hai.vo hatane padegi.

@@ -1,4 +1,5 @@
 package com.MyProject.Feature_Tracking_Portal.service;
+import com.MyProject.Feature_Tracking_Portal.exception.PullRequestNotFoundException;
 import com.MyProject.Feature_Tracking_Portal.models.Feature;
 import com.MyProject.Feature_Tracking_Portal.models.PullRequest;
 import com.MyProject.Feature_Tracking_Portal.repository.FeatureRepository;
@@ -45,7 +46,7 @@ public class PullRequestServiceImpl implements PullRequestService{
         Optional<PullRequest> pullRequestOptional = pullRequestRepository.findById(pullRequestId);
 
         if (pullRequestOptional.isEmpty()) {
-            throw new IllegalArgumentException("Pull Request with ID " + pullRequestId + " not found.");
+            throw new PullRequestNotFoundException("Pull Request with ID " + pullRequestId + " not found.");
         }
 
         PullRequest pullRequest = pullRequestOptional.get();

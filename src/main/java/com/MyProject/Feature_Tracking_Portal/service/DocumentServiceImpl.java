@@ -1,15 +1,20 @@
 package com.MyProject.Feature_Tracking_Portal.service;
+
+import com.MyProject.Feature_Tracking_Portal.dto.request.DocumentRequest;
 import com.MyProject.Feature_Tracking_Portal.enums.DocumentType;
 import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.exception.FeatureNotFoundException;
+import com.MyProject.Feature_Tracking_Portal.exception.UnauthorizedDocumentUploadException;
+import com.MyProject.Feature_Tracking_Portal.exception.UserNotFoundException;
 import com.MyProject.Feature_Tracking_Portal.models.Document;
 import com.MyProject.Feature_Tracking_Portal.models.Feature;
 import com.MyProject.Feature_Tracking_Portal.models.User;
 import com.MyProject.Feature_Tracking_Portal.repository.DocumentRepository;
 import com.MyProject.Feature_Tracking_Portal.repository.FeatureRepository;
 import com.MyProject.Feature_Tracking_Portal.repository.UserRepository;
-import com.MyProject.Feature_Tracking_Portal.dto.request.DocumentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -34,22 +39,22 @@ public class DocumentServiceImpl implements DocumentService {
 //        }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        System.out.println("Document Type is:" + request.getDocumentType());
-        System.out.println("user Type is:" + user.getRole());
+//        System.out.println("Document Type is:" + request.getDocumentType());
+//        System.out.println("user Type is:" + user.getRole());
 
-        // 3. Validate document type based on user role
-        System.out.println( "The function returns "+canUploadDocument(user.getRole(), request.getDocumentType()));
-        System.out.println("output of statement :" +( DocumentType.TECHNICAL_DOC == request.getDocumentType()));
+        // Validate document type based on user role
+//        System.out.println( "The function returns "+canUploadDocument(user.getRole(), request.getDocumentType()));
+//        System.out.println("output of statement :" +( DocumentType.TECHNICAL_DOC == request.getDocumentType()));
 
 
         if (!canUploadDocument(user.getRole(), request.getDocumentType())) {
-            throw new RuntimeException("User is not allowed to upload this document type.");
+            throw new UnauthorizedDocumentUploadException("User is not allowed to upload this document type.");
         }
 
         Feature feature = featureRepository.findByFeatureId(request.getFeatureId())
-                .orElseThrow(() -> new RuntimeException("Feature not found with ID: " + request.getFeatureId()));
+                .orElseThrow(() -> new FeatureNotFoundException("Feature not found with ID: " + request.getFeatureId()));
 
         // 4. Save document
         Document document = new Document();
@@ -81,7 +86,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     public List<Document> getDocumentsByFeatureId(Long featureId) {
         Feature feature = featureRepository.findById(featureId)
-                .orElseThrow(() -> new IllegalArgumentException("Feature not found with ID: " + featureId));
+                .orElseThrow(() -> new FeatureNotFoundException("Feature not found with ID: " + featureId));
 
         return documentRepository.findByFeatureId(feature);
     }

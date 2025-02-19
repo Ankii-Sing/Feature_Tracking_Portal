@@ -2,6 +2,7 @@ package com.MyProject.Feature_Tracking_Portal.service;
 
 import com.MyProject.Feature_Tracking_Portal.dto.response.UserResponse;
 import com.MyProject.Feature_Tracking_Portal.enums.UserRole;
+import com.MyProject.Feature_Tracking_Portal.exception.UserNotFoundException;
 import com.MyProject.Feature_Tracking_Portal.models.User;
 import com.MyProject.Feature_Tracking_Portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +21,24 @@ public class UserServiceImpl implements UserService {
 
     public User findById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
     }
 
     public UserRole findRoleById(Long userId) {
         return userRepository.findById(userId)
                 .map(User::getRole)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
     }
 
     @Override
     public Long findUserIdByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow(()-> new RuntimeException("user email not found")).getUserId();
+        return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("user email not found")).getUserId();
 //                orElseThrow(()-> new RuntimeException("user email not found"));
     }
 
     public UserResponse getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         return new UserResponse(
                 user.getUserId(),

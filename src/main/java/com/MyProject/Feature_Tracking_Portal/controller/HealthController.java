@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/secure")
-public class DemoController {
-    @GetMapping("/demo")
+public class HealthController {
+    @GetMapping("/test")
     public ResponseEntity<String> demo(@RequestHeader("Authorization") String token) {
         System.out.println("token is : " + token);
         return ResponseEntity.ok("Hello World");
